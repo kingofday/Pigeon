@@ -2,6 +2,7 @@
 ### Requirements
 
 * JQuery
+* popper.js
 * bootstrap.js
 * bootstrap.css
 
@@ -10,6 +11,8 @@
 add "css/pigeon.css" to head tag in html page
 add "css/bootstrap.css" to head tag in html page
 add "js/jquery-3.1.1.min.js"(version not matters) to end of body tag
+add "js/popper.min.js" to end of body tag
+add "js/bootstrap.js"(version not matters) to end of body tag
 add "js/pigeon.js" to end of body tag to
 ```
 ### Usage
