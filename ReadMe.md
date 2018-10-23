@@ -44,3 +44,7 @@ $('select your button').pigeon({
 * 1- IsSuccesssful
 * 2- Message: message if there is an error
 * not forget to include css file of font your using
+
+### schema
+
+![alt text](assets/exp2.png)
