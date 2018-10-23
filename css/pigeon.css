@@ -1,6 +1,7 @@
 ﻿.pigeon-wrapper {
     direction: rtl;
     text-align: right;
+    padding-top:15px;
 }
 
 .pigeon-input {

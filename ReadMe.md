@@ -29,6 +29,9 @@ $('select your button').pigeon({
 |  url | string |  url of server api for sending each file seperatly
 | maxFileCount | int | maximum number of files to upload, default is 10 |
 | maxFileSize | int | maximum size of each file in MB, default is 5 |
+| extentions | string | extentions of files like "image/*,application/pdf", default is "*" |
+| checkedIcon | string | icon class used for check icon |
+| errorIcon | string | icon class used for error icon |
 
 ### Some Points
 

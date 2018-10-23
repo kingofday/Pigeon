@@ -24,6 +24,9 @@ var pigeonDic = {
         args.maxFileCount = typeof args.maxFileCount !== 'undefined' ? args.maxFileCount : 10;
         args.maxFileSize = typeof args.maxFileSize !== 'undefined' ? args.maxFileSize : 5;//MB
         args.extentions = typeof args.extentions !== 'undefined' ? args.extentions : '*';
+        args.checkedIcon = typeof args.checkedIcon !== 'undefined' ? args.checkedIcon : 'zmdi zmdi-check';
+        args.errorIcon = typeof args.errorIcon !== 'undefined' ? args.errorIcon : 'zmid zmdi-icon';
+
         var id = $elm.attr('id');
         //add wrapper
         $('#' + id + '-pigeon-wrapper').remove();
@@ -33,7 +36,7 @@ var pigeonDic = {
             type: 'file',
             class: 'pigeon-input',
             id: id + 'pigeon-input',
-            multiple: args.multiple,
+            multiple: 'true',
             accept: args.extentions
 
         });
@@ -80,8 +83,8 @@ var pigeonDic = {
         //upload each file to server & append loader
         var upload = function (file) {
             var data = new FormData();
-            var request = new XMLHttpRequest();
-
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = false;
             data.append('file', file);
             //add record
             let $record = $('<div></div>', {
@@ -92,18 +95,18 @@ var pigeonDic = {
                 "data-placement": "top",
             });
             //get response
-            request.onreadystatechange = function (oEvent) {
-                if (request.readyState === 4) {
-                    if (request.status === 200) {
-                        if (request.response.IsSuccessful) {
+            xhr.onreadystatechange = function (oEvent) {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        if (xhr.response.Success) {
                             filesCount++;
-                            if (typeof args.success !== 'undefined') args.success(request.response);
+                            if (typeof args.success !== 'undefined') args.success(xhr.response);
                             setState($record, pigeonDic.uploadDone, true);
                         }
                         else {
-                            setState($record, request.response.Message, false);
+                            setState($record, xhr.response.Message, false);
                         }
-                        console.log(request.response);
+                        console.log(xhr.response);
                     } else {
                         $record.attr('title', pigeonDic.defaultError).addClass('danger');
                         //showErrorMessage($record, 'بده دو');
@@ -127,16 +130,16 @@ var pigeonDic = {
             });
             $record.find('.progress').append($progress);
             $wrapper.append($record);
-            request.upload.addEventListener('progress', function (e) {
+            xhr.upload.addEventListener('progress', function (e) {
                 var p = (e.loaded / e.total) * 100;
                 $progress.css({ width: p + '%' });
             });
-            request.responseType = 'json';
+            xhr.responseType = 'json';
 
             // Send POST request to the server side script
-            request.open('post', args.url);
+            xhr.open('post', args.url);
 
-            request.send(data);
+            xhr.send(data);
         };
         //set tooltip for each file
         var setState = function ($elm, message, success) {
